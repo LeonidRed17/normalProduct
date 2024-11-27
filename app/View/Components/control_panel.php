@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class header-nav extends Component
+class control_panel extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class header-nav extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header-nav');
+        return view('components.control_panel');
     }
 }

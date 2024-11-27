@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class header-user-panel extends Component
+class h1_page_name extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class header-user-panel extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header-user-panel');
+        return view('components.h1_page_name');
     }
 }

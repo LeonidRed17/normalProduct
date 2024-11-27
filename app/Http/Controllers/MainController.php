@@ -22,7 +22,11 @@ class MainController extends Controller
     }
     public function show_products()
     {
-        //$products = new Products();
+
+        $products = new Products();
+        $allProducts = $products->showAllProducts();
+
+        /*
         $products = DB::table('products')
 
             ->join('shops', 'products.shop', '=', 'shops.shop_name')
@@ -31,9 +35,11 @@ class MainController extends Controller
             ->join('quality', 'products.product_quality', '=', 'quality.quality_name')
             ->select('products.*')
             ->get();
+            
+        */
         $shops = new Shops();
 
-        return view('products', ['products' => $products, 'shops' => $shops->all()]);
+        return view('products', ['products' => $allProducts, 'shops' => $shops->all()]);
         //return view('products', ['products' => $products->all(), 'shops' => $shops->all()]);
     }
     public function show_product($id)

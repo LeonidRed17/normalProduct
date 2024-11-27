@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class logout-button extends Component
+class table extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class logout-button extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.logout-button');
+        return view('components.table');
     }
 }
