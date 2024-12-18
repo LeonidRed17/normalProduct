@@ -1,7 +1,33 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.btn_hover_off:hover{
+.btn_hover_off:hover {
     background: none;
+}
+
+
+.btn_hover_off:hover {
+    background: none;
+    color: white;
+}
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+    background-color: white;
+}
+
+.text-bg-light:focus {
+    color: #000 !important;
+    background-color: white !important;
+}
+
+.image_products {
+    width: 100% !important;
+    height: 500px !important;
 }

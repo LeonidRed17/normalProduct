@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Admin;
 
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Route::middlewareGroup('admin', [Admin::class]);
+
         //
     }
 }

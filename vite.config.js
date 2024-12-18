@@ -12,7 +12,6 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            // Это важно для компиляции шаблонов на клиенте
             'vue': 'vue/dist/vue.esm-bundler.js',
         },
     },
