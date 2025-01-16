@@ -3,5 +3,9 @@
 Главная страница
 @endsection
 @section('main_content')
-<h1>Здравствуйте! Это главная страница.</h1>
+<h1>Главная страница.</h1>
+<div class="d-flex row">
+Раздел в разработке
+</div>
+
 @endsection

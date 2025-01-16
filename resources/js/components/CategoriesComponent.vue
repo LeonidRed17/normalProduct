@@ -1,37 +1,20 @@
 <template>
   <div class="col col-3">
     <p class="mb-2">Выберите категорию продукта</p>
-    <select
-      class="form-select mb-4 bg-white"
-      name="product_category"
-      id="product_category"
-      v-model="selectedCategory"
-    >
+    <select class="form-select mb-4 bg-white" name="product_category" id="product_category" v-model="selectedCategory">
       <option disabled selected>Выберите категорию</option>
-      <option
-        v-for="category in sortedCategories"
-        :key="category.id"
-        :value="category.category_name"
-      >
+      <option v-for="category in sortedCategories" :key="category.id" :value="category.category_name">
         {{ category.category_name }}
       </option>
     </select>
   </div>
   <div class="col col-3">
     <p class="mb-2">Выберите подкатегорию продукта</p>
-    <select
-      class="form-select mb-4 bg-white"
-      name="product_subcategory"
-      id="product_subcategory"
-      v-model="selectedSubcategory"
-      :disabled="!selectedCategory"
-    >
+    <select class="form-select mb-4 bg-white" name="product_subcategory" id="product_subcategory"
+      v-model="selectedSubcategory" :disabled="!selectedCategory">
       <option disabled selected>Выберите подкатегорию</option>
-      <option
-        v-for="subcategory in sortedFilteredSubcategories"
-        :key="subcategory.id"
-        :value="subcategory.subcategory_name"
-      >
+      <option v-for="subcategory in sortedFilteredSubcategories" :key="subcategory.id"
+        :value="subcategory.subcategory_name">
         {{ subcategory.subcategory_name }}
         {{ subcategory.category_name }}
       </option>
@@ -69,6 +52,12 @@ export default {
         .slice()
         .sort((a, b) => a.subcategory_name.localeCompare(b.subcategory_name));
     },
+  },
+  mounted() {
+    // Установим начальное значение, чтобы первая категория была выбрана по умолчанию
+    if (this.sortedCategories.length > 0) {
+      this.selectedCategory = this.sortedCategories[0].category_name;
+    }
   },
 };
 </script>

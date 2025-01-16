@@ -8,7 +8,10 @@ use App\Http\Controllers\ModerationController;
 Route::get('/', [MainController::class, "home"])->name("home");
 Route::get('/about', [MainController::class, "about"])->name("about");
 Route::get('/shops', [MainController::class, "shops"])->name('shops');
+Route::get('/news', [MainController::class, "news"])->name("news");
+
 Route::get('/search', [MainController::class, "search"])->name('search');
+
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/products', [MainController::class, "show_products"])->name("show_products");

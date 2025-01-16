@@ -1,0 +1,117 @@
+<template>
+  <div class="d-flex flex-row mb-3">
+    <a href="/products" class="btn btn-primary me-2">Все продукты</a>
+    <a href="/add_product" class="btn btn-primary me-2">Добавить продукт</a>
+    <button class="btn btn-success justify-content-center align-items-center d-flex" @click="show = !show">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
+        viewBox="0 0 16 16">
+        <path
+          d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+        <path
+          d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+      </svg>
+      <span class="ml-1">Сортировка</span>
+    </button>
+  </div>
+  <div v-if="show" class="d-flex flex-row">
+    <div class="col-2 me-3">
+      <p class="mb-2">Выберите категорию продукта</p>
+      <select class="form-select mb-4 bg-white" name="product_category" id="product_category"
+        v-model="selectedCategory">
+        <option disabled value="">Выберите категорию</option>
+        <option v-for="category in sortedCategories" :key="category.id" :value="category.category_name">
+          {{ category.category_name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-2">
+      <p class="mb-2 me-3">Выберите подкатегорию продукта</p>
+      <select class="form-select mb-4 bg-white" name="product_subcategory" id="product_subcategory"
+        v-model="selectedSubcategory" :disabled="!selectedCategory">
+        <option disabled selected>Выберите подкатегорию</option>
+        <option v-for="subcategory in sortedFilteredSubcategories" :key="subcategory.id"
+          :value="subcategory.subcategory_name">
+          {{ subcategory.subcategory_name }}
+          {{ subcategory.category_name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-2 ms-3">
+      <p class="mb-2">По цене</p>
+      <br>
+      <div class="d-flex">
+        <button class="btn btn-success justify-content-center align-items-center d-flex me-2">
+          <DownArrowIconComponent />Дешевле
+        </button>
+        <button class="btn btn-success justify-content-center align-items-center d-flex">
+          <UpArrowIconComponent />
+          Дороже
+        </button>
+      </div>
+      <div>
+        <RangeComponent :priceMin="priceMin" :priceMax="priceMax" :minPrice="0" :maxPrice="10000"
+          @update:priceMin="priceMin = $event" @update:priceMax="priceMax = $event" />
+        <p>Выбранный диапазон цен: {{ priceMin }} - {{ priceMax }} ₽</p>
+        <button @click="applyFilters">Применить фильтры</button>
+      </div>
+    </div>
+  </div>
+  <div v-if="show" class="d-flex flex-row">
+    <button class="btn btn-success col-2 justify-content-center align-items-center">
+      Сортировать
+    </button>
+  </div>
+</template>
+<script>
+import RangeComponent from './RangeComponent.vue';
+import DownArrowIconComponent from './icons/DownArrowIconComponent.vue';
+import UpArrowIconComponent from './icons/UpArrowIconComponent.vue';
+
+export default {
+  name: "productsfilter-component",
+  components: { RangeComponent, DownArrowIconComponent, UpArrowIconComponent },
+  props: {
+    data: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      selectedCategory: "",
+      selectedSubcategory: null,
+      show: false,
+      priceMin: 0, // Минимальная цена
+      priceMax: 10000, // Максимальная цена
+    };
+  },
+  computed: {
+    sortedCategories() {
+      return this.data.categories
+        .slice()
+        .sort((a, b) => a.category_name.localeCompare(b.category_name));
+    },
+    filteredSubcategories() {
+      return this.data.subcategories.filter(
+        (subcategory) => subcategory.category_name === this.selectedCategory
+      );
+    },
+    sortedFilteredSubcategories() {
+      return this.filteredSubcategories
+        .slice()
+        .sort((a, b) => a.subcategory_name.localeCompare(b.subcategory_name));
+    },
+  },
+  mounted() {
+    // Установим начальное значение, чтобы первая категория была выбрана по умолчанию
+    if (this.sortedCategories.length > 0) {
+      this.selectedCategory = this.sortedCategories[0].category_name;
+    }
+  },
+};
+</script>
+<style scoped>
+h2 {
+  color: blue;
+}
+</style>

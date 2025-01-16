@@ -21,13 +21,44 @@ class MainController extends Controller
     {
         return view('about');
     }
+    public function news()
+    {
+        return view('news');
+    }
+
     public function show_products()
     {
         $shops = new Shops();
 
-        $products = Products::with('user')->where('status', '=', 'published')->paginate(6);
+        //$products = Products::with('user')->where('status', '=', 'published')->paginate(6);
+        $products = Products::with('user')->join('shops', 'products.shop', '=', 'shops.shop_name')
+            ->join('categories', 'products.product_category', '=', 'categories.category_name')
+            ->join('subcategories', 'products.product_subcategory', '=', 'subcategories.subcategory_name')
+            ->join('quality', 'products.product_quality', '=', 'quality.quality_name')
+            ->select('products.*')
+            ->where('status', '=', 'published')->paginate(6);
+        /*
+        $products = DB::table('products')
+        ->join('shops', 'products.shop', '=', 'shops.shop_name')
+        ->join('categories', 'products.product_category', '=', 'categories.category_name')
+        ->join('subcategories', 'products.product_subcategory', '=', 'subcategories.subcategory_name')
+        ->join('quality', 'products.product_quality', '=', 'quality.quality_name')
+        ->select('products.*')
+        ->get();*/
 
-        return view('products', ['products' => $products, 'shops' => $shops->all()]);
+        $shops = new Shops();
+        $categories = new Categories();
+        $subcategories = new Subcategories();
+        $qualities = new Quality();
+
+        return view('products', [
+            'products' => $products,
+            'shops' => $shops->all(),
+            'categories' => $categories->all(),
+            'subcategories' => $subcategories->all(),
+            'qualities' => $qualities->all()
+        ]);
+        //return view('products', ['products' => $products, 'shops' => $shops->all()]);
     }
     public function show_product($id)
     {
@@ -37,16 +68,14 @@ class MainController extends Controller
     }
     public function search(Request $request)
     {
-       
+
         $query = $request->input('query');
         if (isset($query)) {
             $products = Products::where('status', '=', 'published')->where('product_name', 'LIKE', '%' . $query . '%')->paginate(6);
             return view('products.product_search', compact('products', 'query'));
-
-        }else{
+        } else {
             return redirect('/products');
         }
-
     }
     public function shops()
     {

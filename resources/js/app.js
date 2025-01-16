@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { createApp } from 'vue';
 
 import CategoriesComponent from './components/CategoriesComponent.vue';
+import ProductsFilterComponent from './components/ProductsFilterComponent.vue';
 
 import Alpine from 'alpinejs';
 
@@ -19,6 +20,7 @@ if (appElement) {
 
     // Регистрируем компонент
     app.component('categories-component', CategoriesComponent);
+    app.component('productsfilter-component', ProductsFilterComponent);
 
     // Монтируем приложение на элемент с id 'app'
     app.mount(appElement);

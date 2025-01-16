@@ -12,13 +12,8 @@
 @endif
 @section('title')Добавить продукт @endsection
 @section('main_content')
-<h1 class="mt-5 mb-4">Добавить продукт</h1>
-<p class="mb-3">Здесь можно добавить новый продукт.
-    <br>Если вы хотите посмотреть все продукты нажмите "Все продукты":
-</p>
-<a href="/products" class="btn btn-primary mb-5">Все продукты</a>
-<a href="/add_product" class="btn btn-primary mb-5">Добавить продукт</a>
-<p class="mb-2"><b>Для добавления продукта необходимо указать:</b></p>
+<h1 class="mt-4 mb-4">Добавить продукт</h1>
+<p class="mb-2 mt-3"><b>Для добавления продукта необходимо указать:</b></p>
 <ol>
     <li>Тип продукта</li>
     <li>Название продукта</li>
