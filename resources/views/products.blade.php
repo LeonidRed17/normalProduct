@@ -18,7 +18,7 @@
     <x-slot name="page_name">Продукты</x-slot>
 </x-h1_page_name>
 <div class="row d-flex my-5 p-3 text-bg-light border-1" id="app">
-        <productsfilter-component :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}" /></productsfilter-component>
+        <productsfilter-component :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}"></productsfilter-component>
 </div>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach($products as $el)

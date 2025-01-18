@@ -14,28 +14,7 @@
     </button>
   </div>
   <div v-if="show" class="d-flex flex-row">
-    <div class="col-2 me-3">
-      <p class="mb-2">Выберите категорию продукта</p>
-      <select class="form-select mb-4 bg-white" name="product_category" id="product_category"
-        v-model="selectedCategory">
-        <option disabled value="">Выберите категорию</option>
-        <option v-for="category in sortedCategories" :key="category.id" :value="category.category_name">
-          {{ category.category_name }}
-        </option>
-      </select>
-    </div>
-    <div class="col-2">
-      <p class="mb-2 me-3">Выберите подкатегорию продукта</p>
-      <select class="form-select mb-4 bg-white" name="product_subcategory" id="product_subcategory"
-        v-model="selectedSubcategory" :disabled="!selectedCategory">
-        <option disabled selected>Выберите подкатегорию</option>
-        <option v-for="subcategory in sortedFilteredSubcategories" :key="subcategory.id"
-          :value="subcategory.subcategory_name">
-          {{ subcategory.subcategory_name }}
-          {{ subcategory.category_name }}
-        </option>
-      </select>
-    </div>
+    <CategoriesComponent :categories="data.categories" :subcategories="data.subcategories" />
     <div class="col-2 ms-3">
       <p class="mb-2">По цене</p>
       <br>
@@ -64,12 +43,13 @@
 </template>
 <script>
 import RangeComponent from './RangeComponent.vue';
+import CategoriesComponent from './CategoriesComponent.vue';
 import DownArrowIconComponent from './icons/DownArrowIconComponent.vue';
 import UpArrowIconComponent from './icons/UpArrowIconComponent.vue';
 
 export default {
   name: "productsfilter-component",
-  components: { RangeComponent, DownArrowIconComponent, UpArrowIconComponent },
+  components: { RangeComponent, CategoriesComponent, DownArrowIconComponent, UpArrowIconComponent },
   props: {
     data: {
       type: Object,
@@ -78,35 +58,12 @@ export default {
   },
   data() {
     return {
-      selectedCategory: "",
-      selectedSubcategory: null,
       show: false,
       priceMin: 0, // Минимальная цена
       priceMax: 10000, // Максимальная цена
     };
   },
   computed: {
-    sortedCategories() {
-      return this.data.categories
-        .slice()
-        .sort((a, b) => a.category_name.localeCompare(b.category_name));
-    },
-    filteredSubcategories() {
-      return this.data.subcategories.filter(
-        (subcategory) => subcategory.category_name === this.selectedCategory
-      );
-    },
-    sortedFilteredSubcategories() {
-      return this.filteredSubcategories
-        .slice()
-        .sort((a, b) => a.subcategory_name.localeCompare(b.subcategory_name));
-    },
-  },
-  mounted() {
-    // Установим начальное значение, чтобы первая категория была выбрана по умолчанию
-    if (this.sortedCategories.length > 0) {
-      this.selectedCategory = this.sortedCategories[0].category_name;
-    }
   },
 };
 </script>
