@@ -25,14 +25,10 @@
 export default {
   name: "CategoriesComponent",
   props: {
-    categories: {
-      type: Array,
-      required: true,
-    },
-    subcategories: {
-      type: Array,
-      required: true,
-    },
+    data: {
+    type: Object,
+    required: true,
+  },
   },
   data() {
     return {
@@ -42,12 +38,12 @@ export default {
   },
   computed: {
     sortedCategories() {
-      return this.categories
+      return this.data.categories
         .slice()
         .sort((a, b) => a.category_name.localeCompare(b.category_name));
     },
     filteredSubcategories() {
-      return this.subcategories.filter(
+      return this.data.subcategories.filter(
         (subcategory) => subcategory.category_name === this.selectedCategory
       );
     },

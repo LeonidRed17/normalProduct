@@ -14,7 +14,7 @@
     </button>
   </div>
   <div v-if="show" class="d-flex flex-row">
-    <CategoriesComponent :categories="data.categories" :subcategories="data.subcategories" />
+    <CategoriesComponent :data = "data"/>
     <div class="col-2 ms-3">
       <p class="mb-2">По цене</p>
       <br>

@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col">
             <div class="row" id="app">
-                <categories-component :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}" /></categories-component>
+                <categories-component :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}"></categories-component>
             </div>
             @vite('resources/js/app.js')
             <input type="text" class="form-control w-25 bg-white" name="product_name" id="product_name" placeholder="Название продукта">
