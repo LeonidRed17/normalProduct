@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex flex-row mb-3">
-    <a href="/products" class="btn btn-primary me-2">Все продукты</a>
-    <a href="/add_product" class="btn btn-primary me-2">Добавить продукт</a>
-    <button class="btn btn-success justify-content-center align-items-center d-flex" @click="show = !show">
+  <div class="d-flex flex-row flex-wrap flex-sm-nowrap mb-3 justify-content-center justify-content-sm-start">
+    <a href="/products" class="btn btn-primary me-sm-2  col-10 col-sm-4 col-md-3 col-xl-2">Все продукты</a>
+    <a href="/add_product" class="btn btn-primary me-sm-2   col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0">Добавить продукт</a>
+    <button class="btn btn-success justify-content-center align-items-center d-flex col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0" @click="show = !show">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
         viewBox="0 0 16 16">
         <path
@@ -13,43 +13,31 @@
       <span class="ml-1">Сортировка</span>
     </button>
   </div>
-  <div v-if="show" class="d-flex flex-row">
-    <CategoriesComponent :data = "data"/>
-    <div class="col-2 ms-3">
-      <p class="mb-2">По цене</p>
-      <br>
-      <div class="d-flex">
-        <button class="btn btn-success justify-content-center align-items-center d-flex me-2">
-          <DownArrowIconComponent />Дешевле
-        </button>
-        <button class="btn btn-success justify-content-center align-items-center d-flex">
-          <UpArrowIconComponent />
-          Дороже
-        </button>
-      </div>
-      <div>
+  <div v-if="show" class="d-flex flex-row flex-wrap">
+    <CategoriesComponent :data="data" />
+    <div class="col ms-2">
+      <SortPriceFromToComponent  />
+      <div class="mt-4">
         <RangeComponent :priceMin="priceMin" :priceMax="priceMax" :minPrice="0" :maxPrice="10000"
           @update:priceMin="priceMin = $event" @update:priceMax="priceMax = $event" />
-        <p>Выбранный диапазон цен: {{ priceMin }} - {{ priceMax }} ₽</p>
-        <button @click="applyFilters">Применить фильтры</button>
       </div>
     </div>
   </div>
   <div v-if="show" class="d-flex flex-row">
-    <button class="btn btn-success col-2 justify-content-center align-items-center">
+    <button @click="applyFilters" class="btn btn-success justify-content-center align-items-center">
       Сортировать
     </button>
+    <button class="btn btn-danger ms-2" @click="resetFilters">Сброс</button>
   </div>
 </template>
 <script>
 import RangeComponent from './RangeComponent.vue';
 import CategoriesComponent from './CategoriesComponent.vue';
-import DownArrowIconComponent from './icons/DownArrowIconComponent.vue';
-import UpArrowIconComponent from './icons/UpArrowIconComponent.vue';
+import SortPriceFromToComponent from './SortPriceFromToComponent.vue';
 
 export default {
   name: "productsfilter-component",
-  components: { RangeComponent, CategoriesComponent, DownArrowIconComponent, UpArrowIconComponent },
+  components: { RangeComponent, CategoriesComponent, SortPriceFromToComponent},
   props: {
     data: {
       type: Object,

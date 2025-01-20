@@ -1,5 +1,5 @@
 <template>
-  <div class="col col-3">
+  <div class="col">
     <p class="mb-2">Выберите категорию продукта</p>
     <select class="form-select mb-4 bg-white" name="product_category" id="product_category" v-model="selectedCategory">
       <option disabled selected>Выберите категорию</option>
@@ -7,8 +7,6 @@
         {{ category.category_name }}
       </option>
     </select>
-  </div>
-  <div class="col col-3">
     <p class="mb-2">Выберите подкатегорию продукта</p>
     <select class="form-select mb-4 bg-white" name="product_subcategory" id="product_subcategory"
       v-model="selectedSubcategory" :disabled="!selectedCategory">
