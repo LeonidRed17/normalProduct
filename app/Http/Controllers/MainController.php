@@ -151,4 +151,18 @@ class MainController extends Controller
 
         return redirect('/products');
     }
+
+    public function filter(Request $request)
+    {
+
+        // Получаем данные из URL-параметров
+        $data = $request->query();  // Вся информация, переданная через URL параметры
+
+        \Log::info('Полученные данные на сервере:', $data);  // Логируем данные
+
+        return response()->json([
+            'products' => $data,
+            'status' => 'success'
+        ]);
+    }
 }

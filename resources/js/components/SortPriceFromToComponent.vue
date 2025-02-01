@@ -3,14 +3,14 @@
         <p class="mb-2">По цене</p>
         <div class="d-flex">
             <button 
-                @click="setActive('cheaper')" 
+                @click="setActiveButton('cheaper')" 
                 :class="{'btn-success': activeButton !== 'cheaper', 'btn-light-success': activeButton === 'cheaper'}"
                 class="btn justify-content-center align-items-center d-flex me-2"
             >
                 <DownArrowIconComponent />Дешевле
             </button>
             <button 
-                @click="setActive('more_expensive')" 
+                @click="setActiveButton('more_expensive')" 
                 :class="{'btn-success': activeButton !== 'more_expensive', 'btn-light-success': activeButton === 'more_expensive'}"
                 class="btn justify-content-center align-items-center d-flex"
             >
@@ -36,9 +36,14 @@ export default {
         };
     },
     methods: {
-        setActive(button) {
+        setActiveButton(button) {
             this.activeButton = button; // Устанавливаем активную кнопку
+            console.log(this.activeButton);
+            this.$emit('setActiveButton', this.activeButton);
         },
+        reset(){
+            this.activeButton = null;
+        }
     },
 };
 </script>

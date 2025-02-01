@@ -1,8 +1,16 @@
 <template>
+  <!--
+ Добавить сортировку по магазину и по качеству товара...?
+ Зарефакторить добавление продукта, длинный инпут
+ -->
+
   <div class="d-flex flex-row flex-wrap flex-sm-nowrap mb-3 justify-content-center justify-content-sm-start">
     <a href="/products" class="btn btn-primary me-sm-2  col-10 col-sm-4 col-md-3 col-xl-2">Все продукты</a>
-    <a href="/add_product" class="btn btn-primary me-sm-2   col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0">Добавить продукт</a>
-    <button class="btn btn-success justify-content-center align-items-center d-flex col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0" @click="show = !show">
+    <a href="/add_product" class="btn btn-primary me-sm-2   col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0">Добавить
+      продукт</a>
+    <button
+      class="btn btn-success justify-content-center align-items-center d-flex col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0"
+      @click="show = !show">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear"
         viewBox="0 0 16 16">
         <path
@@ -14,30 +22,33 @@
     </button>
   </div>
   <div v-if="show" class="d-flex flex-row flex-wrap">
-    <CategoriesComponent :data="data" />
+    <ul>
+      <li v-for="product in products">{{ product }}</li>
+    </ul>
+    <CategoriesComponent :data='data' @setValues="getCategoriesValues" ref="categoriesComponent" />
     <div class="col ms-2">
-      <SortPriceFromToComponent  />
+      <SortPriceFromToComponent @setActiveButton="getSortPriceFromToValue" ref="sortPriceFromToComponent"/>
       <div class="mt-4">
-        <RangeComponent :priceMin="priceMin" :priceMax="priceMax" :minPrice="0" :maxPrice="10000"
-          @update:priceMin="priceMin = $event" @update:priceMax="priceMax = $event" />
+        <RangeComponent @setValues="getPriceValues" ref="rangeComponent" />
       </div>
     </div>
   </div>
   <div v-if="show" class="d-flex flex-row">
-    <button @click="applyFilters" class="btn btn-success justify-content-center align-items-center">
+    <button @click="fetchProducts" class="btn btn-success justify-content-center align-items-center">
       Сортировать
     </button>
-    <button class="btn btn-danger ms-2" @click="resetFilters">Сброс</button>
+    <button class="btn btn-danger ms-2" @click="resetFilter">Сброс</button>
   </div>
 </template>
 <script>
 import RangeComponent from './RangeComponent.vue';
 import CategoriesComponent from './CategoriesComponent.vue';
 import SortPriceFromToComponent from './SortPriceFromToComponent.vue';
+import axios from '../axiosConfig';
 
 export default {
   name: "productsfilter-component",
-  components: { RangeComponent, CategoriesComponent, SortPriceFromToComponent},
+  components: { RangeComponent, CategoriesComponent, SortPriceFromToComponent },
   props: {
     data: {
       type: Object,
@@ -47,11 +58,52 @@ export default {
   data() {
     return {
       show: false,
-      priceMin: 0, // Минимальная цена
-      priceMax: 10000, // Максимальная цена
+      products: [],
+      filteredData: {
+        selectedCategory: undefined,
+        selectedSubcategory: undefined,
+        minPrice: undefined,
+        maxPrice: undefined,
+        sortPriceFromTo: undefined,
+      },
     };
   },
-  computed: {
+
+  methods: {
+    getCategoriesValues(values) {
+      this.filteredData.selectedCategory = values.selectedCategory;
+      this.filteredData.selectedSubcategory = values.selectedSubcategory;
+      console.log(this.filteredData)
+    },
+    getPriceValues(values) {
+      this.filteredData.minPrice = values.minPrice;
+      this.filteredData.maxPrice = values.maxPrice;
+      console.log(this.filteredData);
+    },
+    getSortPriceFromToValue(values) {
+      this.filteredData.sortPriceFromTo = values;
+      console.log(this.filteredData);
+    },
+    resetFilter(){
+      this.filteredData = {};
+      this.$refs.categoriesComponent.reset(); 
+      this.$refs.sortPriceFromToComponent.reset();
+      this.$refs.rangeComponent.reset();
+      console.log(this.filteredData);
+    },
+    async fetchProducts() {
+      try {
+        const response = await axios.get('/filter', { params: this.filteredData });
+
+        this.products = response.data.products;
+        console.log('Response:', response);
+        console.log('products:', this.products);
+
+
+      } catch (error) {
+        console.error('Ошибка при загрузке продуктов:', error);
+      }
+    },
   },
 };
 </script>

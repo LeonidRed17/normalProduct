@@ -14,9 +14,10 @@ Route::get('/search', [MainController::class, "search"])->name('search');
 
 
 Route::controller(MainController::class)->group(function () {
-    Route::get('/products', [MainController::class, "show_products"])->name("show_products");
-    Route::get('/products/{id}', [MainController::class, "show_product"])->name('show_product');
+    Route::get('/products', 'show_products')->name('show_products');
+    Route::get('/products/{id}', 'show_product')->name('show_product');
 });
+
 
 
 
