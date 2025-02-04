@@ -17,11 +17,12 @@ const appElement = document.getElementById('app');
 if (appElement) {
     // Создаем приложение Vue
     const app = createApp({});
-
+    console.log(CategoriesComponent);
     // Регистрируем компонент
-    app.component('categories-component', CategoriesComponent);
+    app.component('categoriescomponent', CategoriesComponent);
     app.component('productsfilter-component', ProductsFilterComponent);
 
     // Монтируем приложение на элемент с id 'app'
     app.mount(appElement);
+    console.log(app);
 }

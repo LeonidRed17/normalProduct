@@ -1,11 +1,20 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
-    baseURL: '/api', // Укажите базовый URL для ваших API запросов
-    headers: {
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        'X-Requested-With': 'XMLHttpRequest',
-    },
-});
+const csrfMetaTag = document.querySelector('meta[name="csrf-token"]');
+
+let axiosInstance = null;
+
+if (csrfMetaTag) {
+    const csrfToken = csrfMetaTag.getAttribute('content');
+    axiosInstance = axios.create({
+        baseURL: '/api',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    });
+} else {
+    console.warn('CSRF-токен не найден. Axios не инициализирован.');
+}
 
 export default axiosInstance;

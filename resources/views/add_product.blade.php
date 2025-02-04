@@ -25,10 +25,10 @@
     @csrf
     <div class="row">
         <div class="col">
-            <div class="row" id="app">
-                <categories-component :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}"></categories-component>
+            <div class="row d-flex" id="app">
+                <meta name="csrf-token" content="{{csrf_token()}}">
+                <CategoriesComponent :data="{{json_encode(['subcategories' => $subcategories, 'categories' => $categories, 'customClass' => 'w-25'])}}"/>
             </div>
-            @vite('resources/js/app.js')
             <input type="text" class="form-control w-25 bg-white" name="product_name" id="product_name" placeholder="Название продукта">
             <br>
             <input type="text" class="form-control w-25 bg-white" name="product_description" id="product_description" placeholder="Описание продукта"><br>
