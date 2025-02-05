@@ -2,7 +2,7 @@
     <ProductsFilterComponent :data="this.data"></ProductsFilterComponent>
     {{ console.log(this.data) }}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div v-for="product in this.data.products.data" :key="product.id">
+        <div v-for="product in products.data" :key="product.id">
             <div class="col mb-5">
                 <div class="image-wrapper d-flex justify-center border border-lighter border-1" width="381px"
                     height="383px">
@@ -42,18 +42,18 @@
     </div>
     <nav>
         <ul class="pagination">
-            {{console.log(this.data.products)}}
-            <li v-if="this.data.products.prev_page_url" class="page-item">
+            {{console.log(products.links)}}
+            <li v-if="products.prev_page_url" class="page-item">
                 <a class="page-link" href="#" @click.prevent="fetchProducts(products.prev_page_url)">Назад</a>
             </li>
-            <li v-for="page in this.data.products.links" :key="page.url" class="page-item"
+            <li v-for="(page, index) in products.links" :key="index" class="page-item"
                 :class="{ active: page.active }">
                 <a class="page-link" href="#" @click.prevent="fetchProducts(page.url)" v-if="page.url">
                     {{ page.label }}
                 </a>
             </li>
-            <li v-if="this.data.products.next_page_url" class="page-item">
-                <a class="page-link" href="#" @click.prevent="fetchProducts(this.data.products.next_page_url)">Вперёд</a>
+            <li v-if="products.next_page_url" class="page-item">
+                <a class="page-link" href="#" @click.prevent="fetchProducts(products.next_page_url)">Вперёд</a>
             </li>
         </ul>
     </nav>
@@ -76,10 +76,6 @@ export default {
     data() {
         return {
             products: {
-                data: [], // Список продуктов
-                links: [], // Ссылки на страницы
-                prev_page_url: null,
-                next_page_url: null,
             },
         };
     },
@@ -88,8 +84,8 @@ export default {
             axios
                 .get(url)
                 .then((response) => {
-                    this.$emit("update:products", response.data); // Обновляем данные через событие
-                    console.log(response.data);
+                    this.products = response.data;
+                    console.log(this.products);
                 })
                 .catch((error) => {
                     console.error("Ошибка при загрузке продуктов:", error);
@@ -97,7 +93,7 @@ export default {
         },
     },
     mounted() {
-        this.fetchProducts("/products"); // Начальная загрузка
+        this.fetchProducts("api/products/filter/"); // Начальная загрузка
     },
 };
 </script>

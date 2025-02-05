@@ -20,6 +20,6 @@
 
 <div id="app">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <productscomponent :data="{{ json_encode(['products' => $products, 'subcategories' => $subcategories, 'categories' => $categories])}}"></productscomponent>
+    <productscomponent :data="{{ json_encode(['subcategories' => $subcategories, 'categories' => $categories])}}"></productscomponent>
 
     @endsection
