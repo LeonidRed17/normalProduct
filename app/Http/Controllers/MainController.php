@@ -192,7 +192,7 @@ class MainController extends Controller
         //$products = Products::where('status', '=', 'published')->where('product_category', '=', $selectedCategory)
         //  ->where('product_subcategory', '=', $selectedSubcategory)->get ();
         //->paginate(6)
-        $products = $query->where('status', '=', 'published')->get();
+        $products = $query->where('status', '=', 'published')->paginate(6);
         
 
         return response()->json($products);

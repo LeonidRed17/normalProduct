@@ -1,0 +1,103 @@
+<template>
+    <ProductsFilterComponent :data="this.data"></ProductsFilterComponent>
+    {{ console.log(this.data) }}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div v-for="product in this.data.products.data" :key="product.id">
+            <div class="col mb-5">
+                <div class="image-wrapper d-flex justify-center border border-lighter border-1" width="381px"
+                    height="383px">
+
+                    <a :href="`/product/${product.id}`">
+                        <img v-if="product.product_image" :src="`/images/products/${product.product_image}`"
+                            alt="Product Image" class="image_products" width="100%" height="350px">
+                        <div v-else class="text-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="500" fill="currentColor"
+                                class=" bi-image border border-lighter border-1" viewBox="0 0 16 16">
+                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                <path
+                                    d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z" />
+                            </svg>
+                        </div>
+                    </a>
+                </div>
+                <div class="card-body text-center border border-lighter border-1 mt-2 p-2">
+                    <p class="card-text text-center fw-medium text-primary text-uppercase mx-auto mt-3"
+                        style="max-width:384px;">{{ product.product_name }}</p>
+                    <p class="card-text text-center fw-medium text-primary text-uppercase mx-auto"
+                        style="max-width:384px;">
+                        {{ product.product_description }}</p>
+                    <p class="card-text text-end fw-bold">{{ product.product_price }} руб.</p>
+                    <p class="card-text text-start text-danger">Качество: {{ product.product_quality }}</p>
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <a href="#" class="">{{ product.product_category }}</a>
+                        <a href="#" class="">{{ product.product_subcategory }}</a>
+                        <a href="#" class="">{{ product.shop }}</a>
+                        <small class="text-body-secondary">{{ product.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav>
+        <ul class="pagination">
+            {{console.log(this.data.products)}}
+            <li v-if="this.data.products.prev_page_url" class="page-item">
+                <a class="page-link" href="#" @click.prevent="fetchProducts(products.prev_page_url)">Назад</a>
+            </li>
+            <li v-for="page in this.data.products.links" :key="page.url" class="page-item"
+                :class="{ active: page.active }">
+                <a class="page-link" href="#" @click.prevent="fetchProducts(page.url)" v-if="page.url">
+                    {{ page.label }}
+                </a>
+            </li>
+            <li v-if="this.data.products.next_page_url" class="page-item">
+                <a class="page-link" href="#" @click.prevent="fetchProducts(this.data.products.next_page_url)">Вперёд</a>
+            </li>
+        </ul>
+    </nav>
+</template>
+<script>
+import ProductsFilterComponent from "./ProductsFilterComponent.vue";
+
+
+export default {
+    name: "ProductsComponent",
+    components: {
+        ProductsFilterComponent
+    },
+    props: {
+        data: {
+            type: Object,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            products: {
+                data: [], // Список продуктов
+                links: [], // Ссылки на страницы
+                prev_page_url: null,
+                next_page_url: null,
+            },
+        };
+    },
+    methods: {
+        fetchProducts(url) {
+            axios
+                .get(url)
+                .then((response) => {
+                    this.$emit("update:products", response.data); // Обновляем данные через событие
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.error("Ошибка при загрузке продуктов:", error);
+                });
+        },
+    },
+    mounted() {
+        this.fetchProducts("/products"); // Начальная загрузка
+    },
+};
+</script>

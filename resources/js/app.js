@@ -5,6 +5,7 @@ import { createApp } from 'vue';
 
 import CategoriesComponent from './components/CategoriesComponent.vue';
 import ProductsFilterComponent from './components/ProductsFilterComponent.vue';
+import ProductsComponent from './components/ProductsComponent.vue';
 
 import Alpine from 'alpinejs';
 
@@ -20,7 +21,9 @@ if (appElement) {
     console.log(CategoriesComponent);
     // Регистрируем компонент
     app.component('categoriescomponent', CategoriesComponent);
-    app.component('productsfilter-component', ProductsFilterComponent);
+    app.component('ProductsFilterComponent', ProductsFilterComponent);
+    app.component('productscomponent', ProductsComponent);
+
 
     // Монтируем приложение на элемент с id 'app'
     app.mount(appElement);
