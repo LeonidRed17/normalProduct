@@ -11,11 +11,10 @@ Route::get('/shops', [MainController::class, "shops"])->name('shops');
 Route::get('/news', [MainController::class, "news"])->name("news");
 
 Route::get('/search', [MainController::class, "search"])->name('search');
-
+Route::get('/product/{id}', [MainController::class, "show_product"])->name('show_product');
 
 Route::controller(MainController::class)->group(function () {
     Route::get('/products', 'show_products')->name('show_products');
-    Route::get('/products/{id}', 'show_product')->name('show_product');
 });
 
 

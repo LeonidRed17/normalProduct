@@ -26,7 +26,7 @@
     <div class="col mb-5">
         <div class="image-wrapper d-flex justify-center border border-lighter border-1" width="381px" height="383px">
 
-            <a href="/products/{{$el->id}}">
+            <a href="/product/{{$el->id}}">
                 @if($el->product_image)
                 <img src="{{ asset('/images/products/' . $el->product_image) }}" class="image_products" width="100%" height="350px">
                 @else

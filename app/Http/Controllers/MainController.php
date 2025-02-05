@@ -82,7 +82,6 @@ class MainController extends Controller
         $shops = new Shops();
         return view('shops', ['shops' => $shops->all()]);
     }
-    public function categories() {}
     public function add_product()
     {
         $products = DB::table('products')
@@ -155,14 +154,49 @@ class MainController extends Controller
     public function filter(Request $request)
     {
 
-        // Получаем данные из URL-параметров
-        $data = $request->query();  // Вся информация, переданная через URL параметры
+        //dd($request);$query = Product::query();
+        $query = Products::query();
 
-        \Log::info('Полученные данные на сервере:', $data);  // Логируем данные
 
-        return response()->json([
-            'products' => $data,
-            'status' => 'success'
-        ]);
+        $selectedCategory = $request->query('selectedCategory');
+        $selectedSubcategory = request('selectedSubcategory');
+        $minPrice = $request->query('minPrice');
+        $maxPrice = $request->query('maxPrice');
+        $sortPriceFromTo = $request->query('sortPriceFromTo');
+
+        if (!is_null($selectedCategory)) {
+            $query->where('product_category', $selectedCategory);
+        }
+
+        if (!is_null($selectedSubcategory)) {
+            $query->where('product_subcategory', $selectedSubcategory);
+        }
+
+        if (!is_null($minPrice)) {
+            $query->where('product_price', '>=', $minPrice);
+        }
+
+        if (!is_null($maxPrice)) {
+            $query->where('product_price', '<=', $maxPrice);
+        }
+
+        if (!is_null($sortPriceFromTo)) {
+            if ($sortPriceFromTo === 'cheaper') {
+                $query->orderBy('product_price', 'asc');
+            } elseif ($sortPriceFromTo === 'more_expensive') {
+                $query->orderBy('product_price', 'desc');
+            }
+        }
+
+
+        //$products = Products::where('status', '=', 'published')->where('product_category', '=', $selectedCategory)
+        //  ->where('product_subcategory', '=', $selectedSubcategory)->get ();
+        //->paginate(6)
+        $products = $query->where('status', '=', 'published')->get();
+        
+
+        return response()->json($products);
+
+        //return response()->json($products->get());
     }
 }

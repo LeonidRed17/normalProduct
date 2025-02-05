@@ -93,7 +93,7 @@ export default {
     },
     async fetchProducts() {
       try {
-        const response = await axios.get('/filter', { params: this.filteredData });
+        const response = await axios.get('/products/filter', { params: this.filteredData });
 
         this.products = response.data.products;
         console.log('Response:', response);
