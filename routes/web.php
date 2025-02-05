@@ -18,7 +18,7 @@ Route::controller(MainController::class)->group(function () {
 });
 
 
-
+s
 
 Route::get('/dashboard', function () {
     return view('dashboard');
