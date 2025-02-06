@@ -44,7 +44,7 @@
           <span>Не найден</span>
           @endif
         </td>
-        <td><a href="/products/{{$el->id}}">{{$el->product_name}}</a></p>
+        <td><a href="/product/{{$el->id}}">{{$el->product_name}}</a></p>
         <td>{{$el->status}}</td>
         <td>{{$el->created_at}}</td>
         <td><input type="checkbox" name="options[]" value="{{$el->id}}"></td>

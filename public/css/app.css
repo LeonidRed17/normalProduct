@@ -1,0 +1,33 @@
+.btn_hover_off:hover {
+    background: none;
+    color: white;
+}
+
+.btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+    background-color: white;
+}
+
+.text-bg-light:focus {
+    color: #000 !important;
+    background-color: white !important;
+}
+
+.image_products{
+    width: 100% !important;
+    height: 500px !important;
+}
+
+/*
+.btn_hover_off:active{
+    background-color: red;
+    color:white;
+}
+a .btn_hover_off{
+    background-color: red;
+    color:white;
+}
+    /*
