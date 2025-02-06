@@ -18,7 +18,6 @@ const appElement = document.getElementById('app');
 if (appElement) {
     // Создаем приложение Vue
     const app = createApp({});
-    console.log(CategoriesComponent);
     // Регистрируем компонент
     app.component('categoriescomponent', CategoriesComponent);
     app.component('ProductsFilterComponent', ProductsFilterComponent);
@@ -27,5 +26,4 @@ if (appElement) {
 
     // Монтируем приложение на элемент с id 'app'
     app.mount(appElement);
-    console.log(app);
 }

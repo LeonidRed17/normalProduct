@@ -38,7 +38,6 @@ export default {
     methods: {
         setActiveButton(button) {
             this.activeButton = button; // Устанавливаем активную кнопку
-            console.log(this.activeButton);
             this.$emit('setActiveButton', this.activeButton);
         },
         reset(){

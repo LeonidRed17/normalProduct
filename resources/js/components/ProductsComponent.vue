@@ -1,7 +1,6 @@
 <template>
-    <ProductsFilterComponent :data="this.data" ref="ProductsFilterComponent" @sentValues="setValues"></ProductsFilterComponent>
-    {{ console.log(this.data) }}
-
+    <ProductsFilterComponent :data="this.data" ref="ProductsFilterComponent" @sentValues="fetchFilteredProdcuts">
+    </ProductsFilterComponent>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div v-for="product in products.data" :key="product.id">
             <div class="col mb-5">
@@ -28,14 +27,15 @@
                         style="max-width:384px;">
                         {{ product.product_description }}</p>
                     <p class="card-text text-end fw-bold">{{ product.product_price }} руб.</p>
-                    <p class="card-text text-start text-danger">Качество: {{ product.product_quality }}</p>
-
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="card-text text-start text-primary">Качество: {{ product.product_quality }}</p>
+                        <small class="text-body-secondary">{{ new Date(product.created_at).toLocaleString() }}</small>
+                    </div>
                     <div class="d-flex justify-content-between align-items-center">
 
                         <a href="#" class="">{{ product.product_category }}</a>
                         <a href="#" class="">{{ product.product_subcategory }}</a>
                         <a href="#" class="">{{ product.shop }}</a>
-                        <small class="text-body-secondary">{{ product.created_at }}</small>
                     </div>
                 </div>
             </div>
@@ -43,25 +43,12 @@
     </div>
     <nav>
         <ul class="pagination">
-            {{ console.log(products.links) }}
-            <!-- Кнопка "Назад" -->
-            <!--<li v-if="products.prev_page_url" class="page-item">
-            <a class="page-link" href="#" @click.prevent="fetchProducts(products.prev_page_url)">Назад</a>
-        </li>-->
-
-            <!-- Кнопки для страниц -->
             <li v-for="(page, index) in products.links" :key="index" class="page-item" :class="{ active: page.active }">
                 <a class="page-link" href="#" @click.prevent="fetchProducts(page.url)" v-if="page.url">
-                    <!-- Условие для изменения текста кнопки "next" -->
                     {{ page.label === 'pagination.next' ? 'Вперёд' : (page.label === 'pagination.previous' ? 'Назад' :
-                    page.label) }}
+                        page.label) }}
                 </a>
             </li>
-
-            <!-- Кнопка "Вперёд" -->
-            <!--<li v-if="products.next_page_url" class="page-item">
-            <a class="page-link" href="#" @click.prevent="fetchProducts(products.next_page_url)">Вперёд</a>
-        </li>-->
         </ul>
     </nav>
 </template>
@@ -82,8 +69,8 @@ export default {
     },
     data() {
         return {
-            products: {
-            },
+            products: {},
+            filteredData: {},
         };
     },
     methods: {
@@ -92,20 +79,28 @@ export default {
                 .get(url)
                 .then((response) => {
                     this.products = response.data;
-                    console.log(this.products);
-                    if (this.$refs.ProductsFilterComponent.filteredData != null) {
-                        console.log('не нал');
-                        console.log(this.$refs.ProductsFilterComponent.filteredData);
-
-                    }
                 })
                 .catch((error) => {
                     console.error("Ошибка при загрузке продуктов:", error);
 
                 });
         },
-        setValues(values) {
-            console.log(values);
+        async fetchFilteredProdcuts(filterOptions) {
+            console.log(filterOptions);
+            this.filteredData = filterOptions;
+            console.log(this.filteredData);
+
+            try {
+                const response = await axios.get('/api/products/filter', { params: this.filteredData });
+
+                this.products = response.data;
+
+                console.log('Response:', response);
+                console.log('products:', this.products);
+
+            } catch (error) {
+                console.error('Ошибка при загрузке продуктов:', error);
+            }
         }
     },
 

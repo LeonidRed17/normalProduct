@@ -76,40 +76,39 @@ export default {
     getCategoriesValues(values) {
       this.filteredData.selectedCategory = values.selectedCategory;
       this.filteredData.selectedSubcategory = values.selectedSubcategory;
-      console.log(this.filteredData)
     },
     getPriceValues(values) {
       this.filteredData.minPrice = values.minPrice;
       this.filteredData.maxPrice = values.maxPrice;
-      console.log(this.filteredData);
+      console.log(values);
     },
     getSortPriceFromToValue(values) {
       this.filteredData.sortPriceFromTo = values;
-      console.log(this.filteredData);
     },
     resetFilter() {
       this.filteredData = {};
       this.$refs.categoriesComponent.reset();
       this.$refs.sortPriceFromToComponent.reset();
       this.$refs.rangeComponent.reset();
-      console.log(this.filteredData);
     },
-    async fetchProducts() {
+    fetchProducts() {
       try {
-        const response = await axios.get('/products/filter', { params: this.filteredData });
-
-        this.products = response.data.products;
-        console.log('Response:', response);
-        console.log('products:', this.products);
-        
         this.$emit('sentValues', this.filteredData);
-        console.log('ass');
-
 
       } catch (error) {
         console.error('Ошибка при загрузке продуктов:', error);
       }
+    }
+    /*
+    async fetchProducts() {
+      try {
+        this.$emit('sentValues', this.filteredData);
+ 
+      } catch (error) {
+        console.error('Ошибка при загрузке продуктов:', error);
+      }
     },
+    */
   },
 };
 </script>
