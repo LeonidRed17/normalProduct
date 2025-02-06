@@ -1,6 +1,7 @@
 <template>
-    <ProductsFilterComponent :data="this.data"></ProductsFilterComponent>
+    <ProductsFilterComponent :data="this.data" ref="ProductsFilterComponent" @sentValues="setValues"></ProductsFilterComponent>
     {{ console.log(this.data) }}
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         <div v-for="product in products.data" :key="product.id">
             <div class="col mb-5">
@@ -42,19 +43,25 @@
     </div>
     <nav>
         <ul class="pagination">
-            {{console.log(products.links)}}
-            <li v-if="products.prev_page_url" class="page-item">
-                <a class="page-link" href="#" @click.prevent="fetchProducts(products.prev_page_url)">Назад</a>
-            </li>
-            <li v-for="(page, index) in products.links" :key="index" class="page-item"
-                :class="{ active: page.active }">
+            {{ console.log(products.links) }}
+            <!-- Кнопка "Назад" -->
+            <!--<li v-if="products.prev_page_url" class="page-item">
+            <a class="page-link" href="#" @click.prevent="fetchProducts(products.prev_page_url)">Назад</a>
+        </li>-->
+
+            <!-- Кнопки для страниц -->
+            <li v-for="(page, index) in products.links" :key="index" class="page-item" :class="{ active: page.active }">
                 <a class="page-link" href="#" @click.prevent="fetchProducts(page.url)" v-if="page.url">
-                    {{ page.label }}
+                    <!-- Условие для изменения текста кнопки "next" -->
+                    {{ page.label === 'pagination.next' ? 'Вперёд' : (page.label === 'pagination.previous' ? 'Назад' :
+                    page.label) }}
                 </a>
             </li>
-            <li v-if="products.next_page_url" class="page-item">
-                <a class="page-link" href="#" @click.prevent="fetchProducts(products.next_page_url)">Вперёд</a>
-            </li>
+
+            <!-- Кнопка "Вперёд" -->
+            <!--<li v-if="products.next_page_url" class="page-item">
+            <a class="page-link" href="#" @click.prevent="fetchProducts(products.next_page_url)">Вперёд</a>
+        </li>-->
         </ul>
     </nav>
 </template>
@@ -86,12 +93,22 @@ export default {
                 .then((response) => {
                     this.products = response.data;
                     console.log(this.products);
+                    if (this.$refs.ProductsFilterComponent.filteredData != null) {
+                        console.log('не нал');
+                        console.log(this.$refs.ProductsFilterComponent.filteredData);
+
+                    }
                 })
                 .catch((error) => {
                     console.error("Ошибка при загрузке продуктов:", error);
+
                 });
         },
+        setValues(values) {
+            console.log(values);
+        }
     },
+
     mounted() {
         this.fetchProducts("api/products/filter/"); // Начальная загрузка
     },

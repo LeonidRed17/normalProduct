@@ -72,6 +72,7 @@ export default {
   },
 
   methods: {
+
     getCategoriesValues(values) {
       this.filteredData.selectedCategory = values.selectedCategory;
       this.filteredData.selectedSubcategory = values.selectedSubcategory;
@@ -100,6 +101,9 @@ export default {
         this.products = response.data.products;
         console.log('Response:', response);
         console.log('products:', this.products);
+        
+        this.$emit('sentValues', this.filteredData);
+        console.log('ass');
 
 
       } catch (error) {
