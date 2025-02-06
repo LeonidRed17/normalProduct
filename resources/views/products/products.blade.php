@@ -1,6 +1,6 @@
 <?php // dd($products) 
 ?>
-@extends('layout')
+@extends('layouts.layout')
 @section('title')Все продукты@endsection
 
 @section('main_content')
@@ -14,9 +14,9 @@
     </ul>
 </div>
 @endif
-<x-h1_page_name>
+<x-headers.h1_page_name>
     <x-slot name="page_name">Продукты</x-slot>
-</x-h1_page_name>
+</x-headers.h1_page_name>
 
 <div id="app">
     <meta name="csrf-token" content="{{ csrf_token() }}">

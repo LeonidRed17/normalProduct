@@ -6,15 +6,15 @@
                     <use xlink:href="#bootstrap"></use>
                 </svg>
             </a>
-            <x-header-nav></x-header-nav>
+            <x-headers.header-nav></x-headers.header-nav>
             <form action="{{ route('search') }}" method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex" role="search">
                 <input type="text" name="query" value="{{ request('query') }}" class="form-control form-control-dark text-bg-light" placeholder="Поиск продукта" aria-label="Search">
                 <button type="submit" class="btn btn-primary ms-2">Искать</button>
             </form>
 
-            <x-header-user-panel>
+            <x-headers.header-user-panel>
 
-            </x-header-user-panel>
+            </x-headers.header-user-panel>
 
         </div>
     </div>

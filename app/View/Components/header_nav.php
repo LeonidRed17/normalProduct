@@ -21,6 +21,6 @@ class header_nav extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.header_nav');
+        return view('components.headers.header_nav');
     }
 }

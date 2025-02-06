@@ -7,8 +7,8 @@
     @vite('resources/js/app.js')
 </head>
 <body>
-<x-header>
-</x-header>
+<x-headers.header>
+</x-headers.header>
 </body>
 <div class="container">
     @yield('main_content')

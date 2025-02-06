@@ -1,6 +1,6 @@
 <?php // dd($products) 
 ?>
-@extends('layout')
+@extends('layouts.layout')
 @section('title')Все продукты@endsection
 
 @section('main_content')

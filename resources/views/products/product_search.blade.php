@@ -1,6 +1,6 @@
 <?php // dd($products) 
 ?>
-@extends('layout')
+@extends('layouts.layout')
 @section('title')Все продукты@endsection
 
 @section('main_content')
@@ -14,9 +14,9 @@
     </ul>
 </div>
 @endif
-<x-h1_page_name>
+<x-headers.h1_page_name>
     <x-slot name="page_name">Поиск по запросу {{$query}}</x-slot>
-</x-h1_page_name>
+</x-headers.-h1_page_name>
 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     @foreach($products as $el)

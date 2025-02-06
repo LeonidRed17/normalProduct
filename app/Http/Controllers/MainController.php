@@ -15,15 +15,15 @@ class MainController extends Controller
 {
     public function home()
     {
-        return view('primary');
+        return view('primary.primary');
     }
     public function about()
     {
-        return view('about');
+        return view('about.about');
     }
     public function news()
     {
-        return view('news');
+        return view('news.news');
     }
 
     public function show_products()
@@ -51,7 +51,7 @@ class MainController extends Controller
         $subcategories = new Subcategories();
         $qualities = new Quality();
 
-        return view('products', [
+        return view('products.products', [
             'products' => $products,
             'shops' => $shops->all(),
             'categories' => $categories->all(),
@@ -64,7 +64,7 @@ class MainController extends Controller
     {
         $product = DB::table('products')->where('id', '=', $id)->get();
 
-        return view('product', ['product' => $product]);
+        return view('products.product', ['product' => $product]);
     }
     public function search(Request $request)
     {
@@ -77,11 +77,7 @@ class MainController extends Controller
             return redirect('/products');
         }
     }
-    public function shops()
-    {
-        $shops = new Shops();
-        return view('shops', ['shops' => $shops->all()]);
-    }
+    
     public function add_product()
     {
         $products = DB::table('products')
@@ -97,7 +93,7 @@ class MainController extends Controller
         $subcategories = new Subcategories();
         $qualities = new Quality();
 
-        return view('add_product', [
+        return view('products.add_product', [
             'products' => $products,
             'shops' => $shops->all(),
             'categories' => $categories->all(),

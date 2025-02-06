@@ -1,7 +1,7 @@
-@extends('layout')
+@extends('layouts.layout')
 @section('title')Модерация @endsection
 @section('main_content')
-<x-h1_page_name>
+<x-headers.h1_page_name>
   <x-slot name="page_name">
     Модерация:
     @if(request()->routeIs('moderation.moderation')){{{'Все публикации'}}}
@@ -11,10 +11,10 @@
 
     @endif
   </x-slot>
-</x-h1_page_name>
+</x-headers.h1_page_name>
 <form method="post" action={{ route('moderation.check') }}>
   @csrf
-  <x-control_panel></x-control_panel>
+  <x-controls.control_panel></x-controls.control_panel>
   @if (session('status'))
   <div class="alert alert-success">
     {{ session('status') }}

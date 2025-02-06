@@ -1,27 +1,27 @@
 <div class="text-end d-flex align-items-center">
     @auth
     @if(Route::is('dashboard'))
-    <x-button>
+    <x-buttons.button>
         <x-slot name="route">/profile</x-slot>
-        {{ auth()->user()->name }} 
-    </x-button>
-    <x-logout-button></x-logout-button>
+        {{auth()->user()->name }} 
+    </x-buttons.button>
+    <x-buttons.logout-button></x-buttons.logout-button>
     @else
-    <x-button>
+    <x-buttons.button>
         <x-slot name="route">/dashboard</x-slot>
         {{ auth()->user()->name }} 
-    </x-button>
-    <x-logout-button></x-logout-button>
+    </x-buttons.button>
+    <x-buttons.logout-button></x-buttons.logout-button>
     @endif
     @endauth
     @guest
-    <x-button>
+    <x-buttons.button>
         <x-slot name="route">/login</x-slot>
         Войти
-    </x-button>
-    <x-button>
+    </x-buttons.button>
+    <x-buttons.button>
         <x-slot name="route">/register</x-slot>
         Регистрация
-    </x-button>
+    </x-buttons.button>
     @endguest
 </div>

@@ -12,26 +12,26 @@ class ModerationController extends Controller
     public function moderation()
     {
         $products = Products::with('user')->paginate(5);
-        return view('moderation', ['products' => $products]);
+        return view('moderation.moderation', ['products' => $products]);
     }
     public function published()
     {
 
         $products = Products::with('user')->where('status', 'published')->paginate(5);
 
-        return view('moderation', ['products' => $products]);
+        return view('moderation.moderation', ['products' => $products]);
     }
     public function unpublished()
     {
         $products = Products::with('user')->where('status', 'unpublished')->paginate(5);
 
-        return view('moderation', ['products' => $products]);
+        return view('moderation.moderation', ['products' => $products]);
     }
     public function archive()
     {
         $products = Products::with('user')->where('status', 'archive')->paginate(5);
 
-        return view('moderation', ['products' => $products]);
+        return view('moderation.moderation', ['products' => $products]);
     }
    
     public function moderation_check(Request $request)

@@ -1,6 +1,6 @@
 <?php //dd($subcategories) 
 ?>
-@extends('layout')
+@extends('layouts.layout')
 @if($errors->any())
 <div>
     <ul>
