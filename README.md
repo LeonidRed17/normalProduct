@@ -21,12 +21,12 @@ Frontend: Bootstrap, Vue 3.
 
 1. Клонируйте репозиторий:
    ```sh
-   git clone https://github.com/user/repo.git
+   git clone https://github.com/LeonidRed17/normalProduct.git
 
 2. Установите зависимости:
    ```sh
    composer install
-   
+
    npm install
 
 3. Загрузите дамп базы данных mysql:
@@ -45,3 +45,14 @@ Frontend: Bootstrap, Vue 3.
     Пароль: 12345678
 
     По идее всё должно работать :)
+
+## Скриншоты
+
+### Продукты
+![Продукты](screenshots/products.png)
+
+### Фильтры
+![Фильтры](screenshots/filters.png)
+
+### Модерация
+![Модерация](screenshots/moderation.png)
