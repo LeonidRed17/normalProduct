@@ -4,20 +4,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ModerationController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SearchController;
 
 Route::get('/', [MainController::class, "home"])->name("home");
 Route::get('/about', [MainController::class, "about"])->name("about");
 Route::get('/shops', [MainController::class, "shops"])->name('shops');
 Route::get('/news', [MainController::class, "news"])->name("news");
 
-Route::get('/search', [MainController::class, "search"])->name('search');
-Route::get('/product/{id}', [MainController::class, "show_product"])->name('show_product');
+Route::get('/search', [SearchController::class, "productsSearch"])->name('search');
 
-Route::controller(MainController::class)->group(function () {
+
+Route::get('/product/{id}', [ProductsController::class, "show_product"])->name('show_product');
+
+Route::controller(ProductsController::class)->group(function () {
     Route::get('/products', 'show_products')->name('show_products');
 });
-
-
 
 
 Route::get('/dashboard', function () {
@@ -29,8 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/add_product', [MainController::class, "add_product"])->name("add_product");
-    Route::post('/products/check', [MainController::class, "products_check"])->name('products_check');
+    Route::get('/products/create', [ProductsController::class, "create"])->name("product_create");
+    Route::post('/products/store', [ProductsController::class, "store"])->name('products_store');
 });
 
 Route::middleware(['auth', 'admin'])->name('moderation.')->group(function () {

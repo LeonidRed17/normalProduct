@@ -7,7 +7,7 @@
 
     <div class="d-flex flex-row flex-wrap flex-sm-nowrap mb-3 justify-content-center justify-content-sm-start">
       <a href="/products" class="btn btn-primary me-sm-2  col-10 col-sm-4 col-md-3 col-xl-2">Все продукты</a>
-      <a href="/add_product" class="btn btn-primary me-sm-2   col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0">Добавить
+      <a href="/products/create" class="btn btn-primary me-sm-2   col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0">Добавить
         продукт</a>
       <button
         class="btn btn-success justify-content-center align-items-center d-flex col-10 col-sm-4 col-md-3 col-xl-2 mt-1 mt-sm-0"

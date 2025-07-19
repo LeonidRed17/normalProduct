@@ -1,4 +1,4 @@
-<?php //dd($subcategories) 
+<?php //dd($subcategories)
 ?>
 @extends('layouts.layout')
 @if($errors->any())
@@ -21,7 +21,7 @@
     <li>Цену за которую продукт продаётся в рублях</li>
 </ol>
 </p>
-<form method="post" enctype="multipart/form-data" action="products/check">
+<form method="post" enctype="multipart/form-data" action="/products/store">
     @csrf
     <div class="row">
         <div class="col">
